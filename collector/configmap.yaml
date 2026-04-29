@@ -9,7 +9,9 @@ data:
       otlp:
         protocols:
           grpc:
+            endpoint: 0.0.0.0:4317   # ← corrigido de 127.0.0.1
           http:
+            endpoint: 0.0.0.0:4318   # ← corrigido de 127.0.0.1
 
     processors:
       batch:
@@ -17,7 +19,7 @@ data:
     exporters:
       debug:
         verbosity: detailed
-      otlp/signoz:
+      otlp/signoz:                    # ← novo exporter
         endpoint: host.docker.internal:4317
         tls:
           insecure: true
@@ -31,4 +33,4 @@ data:
         traces:
           receivers: [otlp]
           processors: [batch]
-          exporters: [debug, otlp/signoz]
+          exporters: [debug, otlp/signoz]  # ← adicionado signoz
